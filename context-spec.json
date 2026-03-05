@@ -1,0 +1,146 @@
+{
+  "context_specification": {
+    "project": {
+      "id": "chronos-data-platform",
+      "name": "Chronos Data Platform",
+      "version": "1.0.0",
+      "description": "Enterprise data engineering and analytics platform meta-repository",
+      "domain": "Data Engineering & Analytics",
+      "organization": "Dulux Tech",
+      "methodology": "DataOps + Data Mesh"
+    },
+    "domain_context": {
+      "bounded_context": "Data Engineering",
+      "core_responsibilities": [
+        "Data ingestion from multiple sources",
+        "ETL/ELT pipeline orchestration",
+        "Data warehouse management",
+        "Feature store operations",
+        "Data visualization and reporting"
+      ],
+      "upstream_dependencies": [
+        "nebula-cloud-platform"
+      ],
+      "downstream_consumers": [
+        "sentinel-ai-engine",
+        "aurora-fullstack-saas"
+      ]
+    },
+    "key_components": [
+      {
+        "id": "data-ingestion",
+        "description": "Unified data ingestion layer",
+        "responsibilities": [
+          "Batch ingestion",
+          "Streaming ingestion",
+          "CDC (Change Data Capture)",
+          "API data collection"
+        ]
+      },
+      {
+        "id": "etl-pipelines",
+        "description": "Data transformation pipelines",
+        "responsibilities": [
+          "Data cleaning",
+          "Data validation",
+          "Data enrichment",
+          "Schema evolution"
+        ]
+      },
+      {
+        "id": "data-warehouse",
+        "description": "Centralized data warehouse",
+        "responsibilities": [
+          "Data storage",
+          "Query optimization",
+          "Data modeling",
+          "Access control"
+        ]
+      },
+      {
+        "id": "feature-store",
+        "description": "ML feature store",
+        "responsibilities": [
+          "Feature computation",
+          "Feature serving",
+          "Feature versioning",
+          "Feature monitoring"
+        ]
+      },
+      {
+        "id": "visualization",
+        "description": "Business intelligence and dashboards",
+        "responsibilities": [
+          "Report generation",
+          "Ad-hoc queries",
+          "Data exploration",
+          "Dashboard creation"
+        ]
+      }
+    ],
+    "data_volumes": {
+      "batch": "TB-scale",
+      "streaming": "100K+ events/sec"
+    },
+    "technology_stack": {
+      "ingestion": ["Azure Event Hubs", "Kafka", "Debezium", "Airbyte"],
+      "processing": ["Spark (Databricks)", "Flink", "dbt"],
+      "storage": ["Delta Lake (ADLS)", "Azure Synapse", "Snowflake"],
+      "orchestration": ["Azure Data Factory", "Airflow", "Dagster", "Prefect"],
+      "quality": ["Great Expectations", "Soda", "Monte Carlo"],
+      "visualization": ["Power BI", "Metabase", "Superset"]
+    },
+    "architecture_principles": [
+      "Data Mesh: Domain-oriented decentralized data ownership",
+      "DataOps: Automated data pipeline operations",
+      "Lakehouse: Unified data lake and warehouse",
+      "Real-time First: Stream processing for latency-sensitive use cases",
+      "Data Quality: Built-in quality checks and observability",
+      "Cost Optimization: Efficient resource utilization"
+    ],
+    "development_phases": {
+      "phase_1": {
+        "name": "Foundation",
+        "duration": "2 weeks",
+        "deliverables": [
+          "Data lake setup (ADLS Gen2)",
+          "Basic ingestion pipelines",
+          "Azure Data Factory orchestration",
+          "Schema registry"
+        ]
+      },
+      "phase_2": {
+        "name": "Core Data Platform",
+        "duration": "4 weeks",
+        "deliverables": [
+          "ETL pipelines",
+          "Azure Synapse integration",
+          "dbt transformations",
+          "Quality framework"
+        ]
+      },
+      "phase_3": {
+        "name": "Advanced Features",
+        "duration": "3 weeks",
+        "deliverables": [
+          "Real-time streaming",
+          "Feature store",
+          "Self-service analytics",
+          "ML integrations"
+        ]
+      }
+    },
+    "quality_requirements": {
+      "test_coverage": 90,
+      "data_quality_checks": "100%",
+      "pipeline_reliability": "99.9%",
+      "documentation": "required"
+    },
+    "success_criteria": {
+      "data_availability": "99.9%",
+      "pipeline_latency": "<5min batch, <100ms streaming",
+      "data_quality_score": "≥95%",
+      "self_service_adoption": "≥50% of teams"
+    }
+  }
+}

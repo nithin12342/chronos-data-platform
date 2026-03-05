@@ -1,0 +1,175 @@
+{
+  "harness": {
+    "project": "chronos-data-platform",
+    "version": "1.0.0",
+    "description": "Harness configuration for Chronos Data Platform - Data Engineering and Analytics",
+    "created_date": "2026-03-05"
+  },
+  "data_platform_harness": {
+    "data_lake": "Delta Lake on Azure Data Lake Storage Gen2",
+    "streaming": "Azure Event Hubs / Kafka",
+    "warehouse": "Azure Synapse Analytics / Snowflake",
+    "orchestration": "Azure Data Factory",
+    "catalog": "Azure Purview",
+    "format": "Delta Lake + Iceberg"
+  },
+  "ingestion_harness": {
+    "batch_sources": [
+      {"name": "Azure Blob Storage", "format": ["CSV", "JSON", "Parquet"]},
+      {"name": "Azure SQL", "connector": "Azure Data Factory"},
+      {"name": "REST API", "connector": "Airbyte"}
+    ],
+    "streaming_sources": [
+      {"name": "Azure Event Hubs", "partitions": 32},
+      {"name": "Kafka", "partitions": 10},
+      {"name": "WebSocket", "connections": 1000}
+    ],
+    "cdc": {
+      "tool": "Debezium",
+      "connectors": ["PostgreSQL", "MySQL", "SQL Server"]
+    }
+  },
+  "processing_harness": {
+    "spark": {
+      "version": "3.4",
+      "deployment": "Azure Databricks",
+      "instances": {"driver": "Standard_D4s_v3", "executor": "Standard_D4s_v3"},
+      "auto_scaling": true
+    },
+    "flink": {
+      "version": "1.17",
+      "deployment": "Azure Stream Analytics",
+      "parallelism": 10
+    },
+    "dbt": {
+      "version": "1.5",
+      "profiles_dir": ".dbt",
+      "target": "prod"
+    }
+  },
+  "storage_harness": {
+    "data_lake": {
+      "format": "Delta Lake",
+      "partitioning": "by date, by region",
+      "compression": "snappy"
+    },
+    "warehouse": {
+      "synapse": {"pool": "DW1000c", "serverless": true},
+      "snowflake": {"warehouse": "COMPUTE_WH"}
+    },
+    "cache": {
+      "redis": {"version": 7, "tier": "Standard"},
+      "memcached": {"tier": "Basic"}
+    }
+  },
+  "ci_cd_harness": {
+    "pipeline_stages": [
+      {
+        "name": "validate",
+        "actions": ["dbt deps", "dbt compile"]
+      },
+      {
+        "name": "test",
+        "actions": ["dbt test", "great-expectations"]
+      },
+      {
+        "name": "build",
+        "actions": ["databricks build", "docker build"]
+      },
+      {
+        "name": "deploy-staging",
+        "actions": ["deploy pipelines", "run integration tests"]
+      },
+      {
+        "name": "deploy-production",
+        "actions": ["blue-green deploy", "smoke tests"]
+      }
+    ],
+    "quality_gates": {
+      "test_coverage": 90,
+      "data_quality": "100%",
+      "pipeline_reliability": 99.9
+    }
+  },
+  "testing_harness": {
+    "data_quality": {
+      "framework": "Great Expectations",
+      "expectations": 100,
+      "alert_on_failure": true
+    },
+    "unit_tests": {
+      "framework": "pytest",
+      "coverage_threshold": 90
+    },
+    "integration_tests": {
+      "framework": "pytest",
+      "environment": "staging"
+    }
+  },
+  "observability_harness": {
+    "metrics": {
+      "backend": "Prometheus",
+      "pipeline_metrics": [
+        "records_processed",
+        "processing_time",
+        "error_rate",
+        "data_freshness"
+      ]
+    },
+    "logging": {
+      "aggregation": "Azure Monitor / Loki",
+      "retention": "90 days"
+    },
+    "dashboards": [
+      {
+        "name": "Data Pipeline Health",
+        "metrics": ["success_rate", "latency", "backlog"]
+      },
+      {
+        "name": "Data Quality",
+        "metrics": ["validation_passed", "anomalies"]
+      },
+      {
+        "name": "Cost Analysis",
+        "metrics": ["compute_cost", "storage_cost"]
+      }
+    ]
+  },
+  "governance_harness": {
+    "catalog": {
+      "tool": "Azure Purview",
+      "metadata": ["schema", "lineage", "ownership"],
+      "auto_discover": true
+    },
+    "access_control": {
+      "model": "RBAC",
+      "fine_grained": true,
+      "masking": true
+    },
+    "retention": {
+      "hot": "30 days",
+      "warm": "90 days",
+      "cold": "1 year",
+      "archive": "7 years"
+    }
+  },
+  "automation_harness": {
+    "scripts": {
+      "run_etl": "scripts/run_etl.py",
+      "backfill": "scripts/backfill.py",
+      "data_quality": "scripts/check_quality.py"
+    },
+    "scheduled_jobs": [
+      {
+        "name": "hourly_etl",
+        "schedule": "hourly",
+        "pipeline": "main_etl"
+      },
+      {
+        "name": "daily_aggregation",
+        "schedule": "0 2 * * *",
+        "pipeline": "daily_agg"
+      }
+    ]
+  }
+}
