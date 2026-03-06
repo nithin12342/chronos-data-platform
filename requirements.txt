@@ -1,0 +1,41 @@
+# Data Platform Dependencies
+pyspark==3.5.0
+delta-spark==3.0.0
+pandas==2.1.4
+numpy==1.26.3
+pyarrow==14.0.2
+
+# Data Quality
+great-expectations==0.18.12
+soda-core==3.0.52
+
+# Data Processing
+dbt-core==1.5.0
+dbt-synapse==1.5.0
+
+# Messaging
+kafka-python-ng==2.2.2
+pymongo==4.6.1
+
+# Database
+sqlalchemy==2.0.25
+asyncpg==0.29.0
+psycopg2-binary==2.9.9
+
+# Orchestration
+apache-airflow==2.8.1
+
+# Cloud
+azure-storage-blob==12.19.1
+azure-mgmt-synapse==2.1.0
+azure-eventhub==5.11.8
+azure-kusto-data==4.1.0
+
+# Utilities
+python-dotenv==1.0.0
+pyyaml==6.0.1
+structlog==24.1.0
+
+# Testing
+pytest==7.4.4
+pytest-cov==4.1.0
